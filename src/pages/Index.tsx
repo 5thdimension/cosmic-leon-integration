@@ -4,17 +4,51 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Trophy, Users, Wallet, ArrowUpRight } from "lucide-react";
+import { Trophy, Users, Wallet, ArrowUpRight, GraduationCap, Building2, ShoppingCart } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
-const data = [
-  { name: 'Jan', value: 400 },
-  { name: 'Feb', value: 300 },
-  { name: 'Mar', value: 600 },
-  { name: 'Apr', value: 800 },
-  { name: 'May', value: 700 },
+const activityData = [
+  { name: 'Lun', value: 400 },
+  { name: 'Mar', value: 300 },
+  { name: 'Mer', value: 600 },
+  { name: 'Jeu', value: 800 },
+  { name: 'Ven', value: 700 },
+];
+
+const services = [
+  {
+    title: "Banque",
+    description: "Gérez vos finances et transactions",
+    icon: Building2,
+    route: "/bank",
+    stats: "Balance: 1000 LC",
+  },
+  {
+    title: "Marché",
+    description: "Achetez et vendez des items",
+    icon: ShoppingCart,
+    route: "/market",
+    stats: "12 nouveaux items",
+  },
+  {
+    title: "Université",
+    description: "Apprenez et progressez",
+    icon: GraduationCap,
+    route: "/university",
+    stats: "3 cours disponibles",
+  },
 ];
 
 const Index = () => {
+  const { toast } = useToast();
+
+  const handleServiceClick = (service: string) => {
+    toast({
+      title: "Service en développement",
+      description: `Le service ${service} sera bientôt disponible!`,
+    });
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background text-white">
@@ -30,6 +64,7 @@ const Index = () => {
             <SidebarTrigger />
           </div>
           
+          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <Card className="p-6 bg-gradient-to-br from-primary to-primary-light border-none">
               <div className="flex justify-between items-start">
@@ -77,6 +112,33 @@ const Index = () => {
             </Card>
           </div>
           
+          {/* Services Interactifs */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-6">Services Interactifs</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service) => (
+                <Card 
+                  key={service.title}
+                  className="p-6 bg-background-light border-none hover:bg-primary/10 transition-colors cursor-pointer"
+                  onClick={() => handleServiceClick(service.title)}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <service.icon className="h-8 w-8 text-accent" />
+                    <Badge variant="outline" className="text-accent-light">
+                      {service.stats}
+                    </Badge>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                  <p className="text-gray-400 text-sm mb-4">{service.description}</p>
+                  <Button variant="outline" size="sm" className="w-full gap-2">
+                    Accéder <ArrowUpRight className="h-4 w-4" />
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Activité et Événements */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="p-6 bg-background-light border-none">
               <div className="flex justify-between items-center mb-6">
@@ -87,7 +149,7 @@ const Index = () => {
               </div>
               <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
+                  <LineChart data={activityData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                     <XAxis dataKey="name" stroke="#666" />
                     <YAxis stroke="#666" />
