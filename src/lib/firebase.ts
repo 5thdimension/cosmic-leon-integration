@@ -2,13 +2,19 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyDtX_T_V_lqXDC8-L8-0Ym7iw5Bw0QxH9Q",         // Clé de test temporaire
+  authDomain: "leon-city-dev.firebaseapp.com",               // Domaine de test temporaire
+  projectId: "leon-city-dev",                                // Projet de test temporaire
+  storageBucket: "leon-city-dev.appspot.com",               // Bucket de test temporaire
+  messagingSenderId: "123456789012",                        // ID temporaire
+  appId: "1:123456789012:web:abcdef1234567890abcdef"       // App ID temporaire
 };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+// Initialisation de Firebase avec gestion d'erreur
+try {
+  const app = initializeApp(firebaseConfig);
+  export const auth = getAuth(app);
+} catch (error) {
+  console.error("Erreur d'initialisation Firebase:", error);
+  throw new Error("Veuillez configurer correctement vos clés Firebase");
+}
