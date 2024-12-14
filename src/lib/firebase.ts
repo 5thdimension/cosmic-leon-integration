@@ -11,10 +11,13 @@ const firebaseConfig = {
 };
 
 // Initialisation de Firebase avec gestion d'erreur
+let auth;
 try {
   const app = initializeApp(firebaseConfig);
-  export const auth = getAuth(app);
+  auth = getAuth(app);
 } catch (error) {
   console.error("Erreur d'initialisation Firebase:", error);
   throw new Error("Veuillez configurer correctement vos clés Firebase");
 }
+
+export { auth };
